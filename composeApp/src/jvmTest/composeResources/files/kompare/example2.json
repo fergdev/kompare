@@ -1,0 +1,84 @@
+{
+  "id": 1,
+  "bounds": {
+    "left": 0.0,
+    "top": 0.0,
+    "right": 1024.0,
+    "bottom": 768.0
+  },
+  "properties": {
+    "AccessibilityKey: IsTraversalGroup": "true"
+  },
+  "children": [
+    {
+      "id": 2,
+      "bounds": {
+        "left": 0.0,
+        "top": 0.0,
+        "right": 1024.0,
+        "bottom": 768.0
+      },
+      "properties": {},
+      "children": [
+        {
+          "id": 3,
+          "bounds": {
+            "left": 456.0,
+            "top": 4.0,
+            "right": 568.0,
+            "bottom": 44.0
+          },
+          "properties": {
+            "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: Text": "[Click me!]",
+            "AccessibilityKey: OnClick": "AccessibilityAction(label=null, action=androidx.compose.foundation.AbstractClickableNode",
+            "AccessibilityKey: Role": "Button",
+            "AccessibilityKey: RequestFocus": "AccessibilityAction(label=null, action=function requestFocus (Kotlin reflection is not available))",
+            "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: Focused": "true",
+            "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: SetTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode"
+          }
+        },
+        {
+          "id": 6,
+          "bounds": {
+            "left": 0.0,
+            "top": 48.0,
+            "right": 1024.0,
+            "bottom": 522.0
+          },
+          "properties": {},
+          "children": [
+            {
+              "id": 8,
+              "bounds": {
+                "left": 287.0,
+                "top": 48.0,
+                "right": 737.0,
+                "bottom": 498.0
+              },
+              "properties": {}
+            },
+            {
+              "id": 9,
+              "bounds": {
+                "left": 397.0,
+                "top": 498.0,
+                "right": 627.0,
+                "bottom": 522.0
+              },
+              "properties": {
+                "AccessibilityKey: SetTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+                "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+                "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+                "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+                "AccessibilityKey: Text": "[Compose: Hello, Java 21.0.8!]"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

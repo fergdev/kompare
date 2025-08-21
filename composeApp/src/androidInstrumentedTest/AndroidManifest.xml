@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <application>-->
+<!--        <activity-->
+<!--            android:name="androidx.activity.ComponentActivity"-->
+<!--            android:exported="true"-->
+<!--            android:theme="@android:style/Theme.Material.Light.NoActionBar" />-->
+<!--    </application>-->
+
+<!--    <instrumentation-->
+<!--        android:name="androidx.test.runner.AndroidJUnitRunner"-->
+<!--        android:targetPackage="io.fergdev.kompare.example"/>-->
+
+    <application>
+        <activity
+            android:name=".HostActivity"
+            android:exported="true" />
+    </application>
+</manifest>
