@@ -33,3 +33,12 @@ jobs:
 
       - name: Build
         run: ./gradlew build
+
+      - name: Artifacts
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: Sample kmp tests
+          path: sample-kmp/build/reports/tests/allTests/index.html
+          if-no-files-found: error
+          compression-level: 0
+          overwrite: false

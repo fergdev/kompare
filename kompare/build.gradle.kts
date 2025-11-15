@@ -20,7 +20,6 @@ group = Config.group
 version = Config.versionName
 
 kotlin {
-    jvmToolchain(11)
     applyDefaultHierarchyTemplate()
     explicitApi()
     withSourcesJar(true)
