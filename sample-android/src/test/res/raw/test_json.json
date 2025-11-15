@@ -1,0 +1,28 @@
+{
+  "id": 1,
+  "bounds": {
+    "left": 0.0,
+    "top": 48.0,
+    "right": 27.0,
+    "bottom": 81.0
+  },
+  "properties": {},
+  "children": [
+    {
+      "id": 3,
+      "bounds": {
+        "left": 0.0,
+        "top": 48.0,
+        "right": 27.0,
+        "bottom": 81.0
+      },
+      "properties": {
+        "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+        "AccessibilityKey: Text": "[Hi]",
+        "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+        "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+        "AccessibilityKey: SetTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode"
+      }
+    }
+  ]
+}

@@ -9,17 +9,18 @@ import org.gradle.api.JavaVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 public object Config {
-    const val group = "io.fergdev"
+    const val group = "io.fergdev.kompare"
     const val artifact = "kompare"
-    const val artifactId = "$group.$artifact"
+    const val coreArtifactId = "$group.core"
+    const val kotestArtifactId = "$group.kotest"
     const val exampleArtifactId = "$group.$artifact.example"
 
     const val name = "kompare"
 
-    const val majorRelease = 1
+    const val majorRelease = 0
     const val minorRelease = 1
     const val patch = 0
-    const val postfix = "-alpha01"
+    const val postfix = "-alpha02"
     const val versionCode = 1
 
     const val majorVersionName = "$majorRelease.$minorRelease.$patch"
@@ -28,14 +29,17 @@ public object Config {
     const val description =
         """A Compose Multiplatform ui testing library"""
 
+    const val inceptionYear = "2025"
+
     const val url = "https://github.com/fergdev/skale"
 
     const val licenseName = "The Apache License, Version 2.0"
     const val licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0.txt"
     const val licenseDistribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
 
-    val jvmTarget = JvmTarget.JVM_11
-    val javaVersion = JavaVersion.VERSION_11
+    val jvmTarget = JvmTarget.JVM_17
+    val javaVersion = JavaVersion.VERSION_17
+    val javaMajorVersion = javaVersion.ordinal + 1
 
     object Android {
         const val compileSdk = 36

@@ -3,7 +3,7 @@ package io.fergdev.kompare.kotest
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestScope
 
-fun TestScope.getFullTestName(): String {
+public fun TestScope.getFullTestName(): String {
     val specName = this.testCase.spec::class.simpleName ?: "unknown"
     val list = mutableListOf<String>()
     var testCase: TestCase? = this.testCase

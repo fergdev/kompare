@@ -1,0 +1,35 @@
+name: Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  actions: read
+  checks: write
+  contents: read
+  id-token: write
+  pages: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          check-latest: true
+          distribution: zulu
+          cache: gradle
+
+      - name: Check
+        run: ./gradlew kotlinWasmUpgradeYarnLock check --warning-mode all
+
+      - name: Build
+        run: ./gradlew build

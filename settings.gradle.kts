@@ -21,6 +21,7 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
+include(":sample-kmp")
 include(":kompare")
 include(":kompare-kotest")
+include(":sample-android")
