@@ -35,6 +35,7 @@ jobs:
         run: ./gradlew build
 
       - name: Artifacts
+        if: always()
         uses: actions/upload-artifact@v5.0.0
         with:
           name: Sample kmp tests
