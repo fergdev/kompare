@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v5.0.0
         with:
           name: Sample kmp lint results
-          path: sample-kmp/build/reports/tests/lint-results-debug.html
+          path: sample-kmp/build/reports/lint-results-debug.html
           if-no-files-found: error
           compression-level: 0
           overwrite: false
