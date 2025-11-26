@@ -1,17 +1,18 @@
+package io.fergdev.kompare.example
+
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import io.fergdev.kompare.KReader
 import io.fergdev.kompare.TestNameResolver
-import io.fergdev.kompare.example.App
 import io.fergdev.kompare.kompare
 import io.fergdev.kompare.runKompareUiTest
 import kompareproj.sample_kmp.generated.resources.Res
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
-class ComposeAppAndroidUnitTest {
+class ComposeAppJvmTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
