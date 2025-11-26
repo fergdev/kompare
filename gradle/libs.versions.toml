@@ -30,8 +30,12 @@ coreKtx = "1.7.0"
 junitKtx = "1.3.0"
 robolectric = "4.16"
 robolectric-android-all = "15-robolectric-13954326"
+dropbox-differ = "0.3.0"
+
 
 [libraries]
+dropbox-differ = { module = "com.dropbox.differ:differ", version.ref = "dropbox-differ" }
+
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }

@@ -76,6 +76,7 @@ kotlin {
             implementation(compose.uiTest)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.dropbox.differ)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)

@@ -18,9 +18,7 @@ class ComposeAppJvmTest {
     @Test
     fun example() = runTest {
         runComposeUiTest {
-            setContent {
-                App()
-            }
+            setContent { App() }
 
             kompare(
                 testNameResolver = object : TestNameResolver {
@@ -35,9 +33,7 @@ class ComposeAppJvmTest {
     @Test
     fun example2() = runTest {
         runComposeUiTest {
-            setContent {
-                App()
-            }
+            setContent { App() }
             onNodeWithText("Click me!").performClick()
             kompare(
                 testNameResolver = object : TestNameResolver {

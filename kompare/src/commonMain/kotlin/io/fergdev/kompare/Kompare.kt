@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.decodeToImageBitmap
 import androidx.compose.ui.graphics.layer.GraphicsLayer
 import androidx.compose.ui.graphics.layer.drawLayer
 import androidx.compose.ui.graphics.rememberGraphicsLayer
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.semantics.SemanticsConfiguration
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.test.ComposeUiTest
@@ -21,11 +23,15 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.toSize
+import com.dropbox.differ.Color
+import com.dropbox.differ.Image
+import com.dropbox.differ.SimpleImageComparator
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.math.absoluteValue
+import kotlin.math.max
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.time.Duration
@@ -207,20 +213,106 @@ public class KompareScope(
         reader: KReader,
         testNameResolver: TestNameResolver,
     ) {
-        this.kompare(reader, testNameResolver)
+//        this.kompare(reader, testNameResolver)
         val actual = this.graphicsLayer.toImageBitmap()
         saveFile(actual, testNameResolver.getFullTestName() + ".png")
         val path = "files/kompare/" + testNameResolver.getFullTestName() + ".png"
         val expected = reader.readBytes(path).decodeToImageBitmap()
-        assertEquals(expected.width, actual.width)
-        assertEquals(expected.height, actual.height)
-        compareImageBitmaps(expected, actual)
+//        assertTrue(compareImageBitmaps(expected, actual))
+        val isEqual = compare(expected, actual)
+        if (!isEqual) {
+            val diff = generateImageDiff(expected, actual)
+            saveFile(diff, testNameResolver.getFullTestName() + "_diff.png")
+        }
+
+        assertTrue(isEqual)
     }
 }
 
+/**
+ * Compares two ImageBitmaps and returns a new ImageBitmap highlighting the differences.
+ *
+ * This function requires the `org.jetbrains.compose.ui:ui-desktop` dependency for the
+ * `.toAwtImage()` and `.toComposeImageBitmap()` conversion functions.
+ *
+ * @param golden The baseline or "golden" image.
+ * @param new The new image to compare against the golden image.
+ * @return An ImageBitmap where differing pixels are colored red and matching pixels are transparent.
+ */
+private fun generateImageDiff(golden: ImageBitmap, new: ImageBitmap): ImageBitmap {
+    // 1. Convert Compose ImageBitmaps to AWT BufferedImages for pixel access.
+    val goldenImage = golden.toPixelMap()
+    val newImage = new.toPixelMap()
+
+    // 2. Determine the dimensions for the output diff image.
+    val width = max(golden.width, new.width)
+    val height = max(golden.height, new.height)
+
+    // 3. Create a new transparent BufferedImage to draw the diff onto.
+    val diffBytes = ByteArray(width * height)
+//    val diffImage = ImageBitmap(width, height, ImageBitmapConfig.Argb8888)
+//    diffImage.readPixelsByteArray()
+//    val diffImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+    val highlightColor = androidx.compose.ui.graphics.Color.Red
+
+
+    // 4. Iterate through each pixel to find differences.
+    for (y in 0 until height) {
+        for (x in 0 until width) {
+            val goldenPixel = if (x < golden.width && y < golden.height) {
+                goldenImage[x, y].value
+            } else {
+                0 as ULong // Treat out-of-bounds pixels as transparent black
+            }
+
+            val newPixel = if (x < new.width && y < new.height) {
+                newImage[x, y].value
+            } else {
+                0 as ULong
+            }
+
+            // 5. If the pixels are different, color the diff image red.
+            if (goldenPixel != newPixel) {
+                diffBytes[y * width + x] = highlightColor.toArgb().toByte()
+            }
+        }
+    }
+
+    // 6. Convert the resulting AWT image back to a Compose ImageBitmap.
+//    return diffImage.toComposeImageBitmap()
+    return diffBytes.decodeToImageBitmap()
+}
+
+
 internal expect fun ImageBitmap.readPixelsByteArray(): ByteArray?
 
+internal fun compare(
+    bitmap1: ImageBitmap?, bitmap2: ImageBitmap?
+): Boolean {
+    if (bitmap1 == null && bitmap2 == null) return true // Both null, considered equal
+    if (bitmap1 == null || bitmap2 == null) return false // One is null, other isn't
+    val differ = SimpleImageComparator()
+    val result = differ.compare(DifferImage(bitmap1), DifferImage(bitmap2))
+    return result.pixelDifferences == 0
+}
+
+private class DifferImage(
+    val ib: ImageBitmap
+) : Image {
+    private val pixelMap = ib.toPixelMap()
+    override val height: Int
+        get() = ib.height
+    override val width: Int
+        get() = ib.width
+
+    override fun getPixel(x: Int, y: Int): Color {
+        val at = pixelMap[x, y]
+        return Color(at.red, at.green, at.blue, at.alpha)
+    }
+}
+
 internal fun compareImageBitmaps(bitmap1: ImageBitmap?, bitmap2: ImageBitmap?): Boolean {
+    println("compareImageBitmaps")
     if (bitmap1 == null && bitmap2 == null) return true // Both null, considered equal
     if (bitmap1 == null || bitmap2 == null) return false // One is null, other isn't
     if (bitmap1.width != bitmap2.width || bitmap1.height != bitmap2.height) {
@@ -252,162 +344,3 @@ internal expect suspend fun saveFile(
     fileName: String,
     directory: String? = null
 ): String?
-
-// commonMain/kotlin/your/package/FuzzyImageComparator.common.kt
-// (This file would provide a common implementation if no `expect fun areImagesSimilar` is used,
-// or it could be part of the `actual` implementation if `expect` is used but shares logic)
-// commonMain/kotlin/your/package/FuzzyImageComparator.kt
-// import androidx.compose.ui.graphics.ImageBitmap
-// enum class ComparisonAlgorithm {
-//    PIXEL_DIFF_PERCENTAGE, // Simple percentage of differing pixels
-//    MSE,                   // Mean Squared Error
-//    SSIM                   // Structural Similarity Index (more complex)
-// }
-//
-// data class ComparisonResult(
-//    val areSimilar: Boolean,
-//    val differenceMetric: Double, // e.g., MSE value, percentage of different pixels, SSIM score
-//    val algorithmUsed: ComparisonAlgorithm
-// )
-//
-// /**
-// * Expected function for fuzzy image comparison.
-// * Implementations will handle pixel data extraction and comparison.
-// *
-// * @param bitmap1 The first image.
-// * @param bitmap2 The second image.
-// * @param algorithm The algorithm to use for comparison.
-// * @param tolerance For PIXEL_DIFF_PERCENTAGE, this is the max allowed percentage of differing pixels (0.0 to 1.0).
-// *                  For MSE, this could be the max allowed MSE value.
-// *                  For SSIM, this is typically the min required SSIM score (close to 1.0 means very similar).
-// * @param pixelDifferenceThreshold For PIXEL_DIFF_PERCENTAGE, the max difference for a single channel (0-255)
-// *                                 or overall pixel color difference for pixels to be considered "same".
-// * @return ComparisonResult indicating similarity and the calculated metric.
-// */
-// expect fun areImagesSimilar(
-//    bitmap1: ImageBitmap,
-//    bitmap2: ImageBitmap,
-//    algorithm: ComparisonAlgorithm = ComparisonAlgorithm.PIXEL_DIFF_PERCENTAGE,
-//    tolerance: Double = 0.05, // Default: 5% difference allowed for PIXEL_DIFF_PERCENTAGE
-//    pixelDifferenceThreshold: Int = 10 // Default: Max channel diff of 10 for PIXEL_DIFF_PERCENTAGE
-// ): ComparisonResult?
-
-// Assuming ImageBitmap.readPixelsByteArray() expect/actual is available from previous discussions
-// import your.package.readPixelsByteArray
-
-// Common implementation for PIXEL_DIFF_PERCENTAGE
-// This would be called by your `actual fun areImagesSimilar` or be the direct common implementation.
-// fun calculatePixelDifferencePercentage(
-//    bitmap1: ImageBitmap,
-//    bitmap2: ImageBitmap,
-//    pixelDifferenceThreshold: Int // Max difference per channel (0-255) for pixels to be "same"
-// ): Double? { // Returns percentage of different pixels (0.0 to 1.0), or null on error
-//    if (bitmap1.width != bitmap2.width || bitmap1.height != bitmap2.height) {
-//        return 1.0 // Treat as 100% different if dimensions mismatch for this simple algo
-//    }
-//
-//    val pixels1Bytes = bitmap1.readPixelsByteArray() // Assumes ARGB_8888 or RGBA_8888 (4 bytes per pixel)
-//    val pixels2Bytes = bitmap2.readPixelsByteArray()
-//
-//    if (pixels1Bytes == null || pixels2Bytes == null || pixels1Bytes.size != pixels2Bytes.size) {
-//        return null // Error reading pixels or mismatched data size
-//    }
-//
-//    val numPixels = bitmap1.width * bitmap1.height
-//    if (numPixels == 0) return 0.0 // No pixels to compare
-//
-//    var differingPixelsCount = 0
-//    val bytesPerPixel = 4 // Assuming ARGB_8888 or RGBA_8888
-//
-//    for (i in 0 until numPixels) {
-//        val offset = i * bytesPerPixel
-//        var differentPixel = false
-//        for (byteIndex in 0 until bytesPerPixel) { // Compare each byte (channel) within the pixel
-//            // For ARGB, byte 0 might be Alpha, 1=Red, 2=Green, 3=Blue (or BGRA, etc.)
-//            // For simplicity, let's just compare absolute byte differences.
-//            // A more accurate comparison would unpack to R, G, B, A ints first.
-//            // This also assumes that alpha is byte 0 and we might want to ignore it or treat it differently.
-//            // Let's assume for this simple example we compare all 4 bytes.
-//            // If you only care about RGB, skip the alpha byte or ensure it's handled.
-//
-//            val diff = kotlin.math.abs(pixels1Bytes[offset + byteIndex].toInt() - pixels2Bytes[offset + byteIndex].toInt())
-//            if (diff > pixelDifferenceThreshold) {
-//                differentPixel = true
-//                break // This pixel is different
-//            }
-//        }
-//        if (differentPixel) {
-//            differingPixelsCount++
-//        }
-//    }
-//    return differingPixelsCount.toDouble() / numPixels.toDouble()
-// }
-//
-// // Actual implementation (if using the `expect fun areImagesSimilar`)
-// // This would go in commonMain if you're NOT using expect/actual for the areImagesSimilar itself,
-// // but rather using the common pixel reading.
-// // If areImagesSimilar is expected, this logic moves into each platform's actual.
-//
-// /*
-// actual fun areImagesSimilar(
-//    bitmap1: ImageBitmap,
-//    bitmap2: ImageBitmap,
-//    algorithm: ComparisonAlgorithm,
-//    tolerance: Double,
-//    pixelDifferenceThreshold: Int
-// ): ComparisonResult? {
-//    if (bitmap1.width != bitmap2.width || bitmap1.height != bitmap2.height) {
-//        // You might want to return a specific ComparisonResult indicating dimension mismatch
-//        // For simplicity, let's say they are not similar in this case for any algorithm.
-//        return ComparisonResult(false, 1.0, algorithm) // 1.0 can mean 100% different
-//    }
-//
-//    when (algorithm) {
-//        ComparisonAlgorithm.PIXEL_DIFF_PERCENTAGE -> {
-//            val diffPercentage = calculatePixelDifferencePercentage(bitmap1, bitmap2, pixelDifferenceThreshold)
-//                ?: return null // Error in calculation
-//            return ComparisonResult(diffPercentage <= tolerance, diffPercentage, algorithm)
-//        }
-//        ComparisonAlgorithm.MSE -> {
-//            // MSE Implementation (see below)
-//            val mseValue = calculateMse(bitmap1, bitmap2) ?: return null
-//            return ComparisonResult(mseValue <= tolerance, mseValue, algorithm)
-//        }
-//        ComparisonAlgorithm.SSIM -> {
-//            // SSIM is much more complex to implement from scratch in commonMain.
-//            // You'd likely use platform libraries via expect/actual for SSIM.
-//            println("SSIM not implemented in pure commonMain for this example.")
-//            return null
-//        }
-//    }
-// }
-// */
-//
-// // Common MSE calculation (can be in commonMain if pixel reading is common)
-// fun calculateMse(bitmap1: ImageBitmap, bitmap2: ImageBitmap): Double? {
-//    // Requires pixel data (e.g., from readPixelsByteArray())
-//    // Ensure dimensions match first (as done in areImagesSimilar)
-//    val pixels1Bytes = bitmap1.readPixelsByteArray() // Assuming ARGB_8888 (4 bytes per pixel)
-//    val pixels2Bytes = bitmap2.readPixelsByteArray()
-//
-//    if (pixels1Bytes == null || pixels2Bytes == null || pixels1Bytes.size != pixels2Bytes.size) {
-//        return null
-//    }
-//    if (bitmap1.width == 0 || bitmap1.height == 0) return 0.0
-//
-//
-//    var sumSquaredError = 0.0
-//    val numChannels = 3 // Assuming we compare R, G, B (ignoring Alpha for simplicity or handle it)
-//    val bytesPerPixel = 4
-//
-//    for (i in 0 until (bitmap1.width * bitmap1.height)) {
-//        val offset = i * bytesPerPixel
-// // Example: Assuming ARGB byte order and we want to compare R, G, B
-// // pixels1Bytes[offset + 0] is Alpha
-// // pixels1Bytes[offset + 1] is Red
-// // pixels1Bytes[offset + 2] is Green
-// // pixels1Bytes[offset + 3] is Blue
-// // (Byte order can vary based on platform and how readPixelsByteArray is implemented!)
-// // It's SAFER to convert to Int pixels and extract channels.
-//
-// // Safer: Convert to Int an
