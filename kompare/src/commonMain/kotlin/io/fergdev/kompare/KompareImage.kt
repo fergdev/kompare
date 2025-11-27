@@ -2,7 +2,6 @@ package io.fergdev.kompare
 
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.decodeToImageBitmap
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.toPixelMap
 import kotlin.math.max
 import kotlin.test.assertTrue
@@ -53,8 +52,8 @@ private fun generateImageDiff(golden: ImageBitmap, new: ImageBitmap): ImageBitma
 //    val diffImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
     val highlightColor = androidx.compose.ui.graphics.Color.Red
 
-
     // 4. Iterate through each pixel to find differences.
+    var i = 0
     for (y in 0 until height) {
         for (x in 0 until width) {
             val goldenPixel = if (x < golden.width && y < golden.height) {
@@ -71,16 +70,24 @@ private fun generateImageDiff(golden: ImageBitmap, new: ImageBitmap): ImageBitma
 
             // 5. If the pixels are different, color the diff image red.
             if (goldenPixel != newPixel) {
-                diffBytes[y * width + x] = highlightColor.toArgb().toByte()
+                println("we diff")
+                diffBytes[i] = 1
             }
+            i++
         }
     }
 
     // 6. Convert the resulting AWT image back to a Compose ImageBitmap.
 //    return diffImage.toComposeImageBitmap()
-    return diffBytes.decodeToImageBitmap()
+//    return diffBytes.decodeToImageBitmap()
+    return createDiffImage(width, height, diffBytes)
 }
 
+internal expect fun createDiffImage(
+    width: Int,
+    height: Int,
+    diffMask: ByteArray, // 0 = same, 1 = different
+): ImageBitmap
 
 internal expect fun ImageBitmap.readPixelsByteArray(): ByteArray?
 

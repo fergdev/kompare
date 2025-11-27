@@ -50,6 +50,7 @@ class ComposeAppJvmTest {
         runKompareUiTest {
             setContent { App() }
             onNodeWithText("Click me!").performClick()
+            awaitIdle()
             kompareImage(
                 testNameResolver = object : TestNameResolver {
                     override fun getFullTestName(): String = "example3"
