@@ -1,5 +1,5 @@
 {
-  "id": 6,
+  "id": 7,
   "bounds": {
     "left": 0.0,
     "top": 0.0,
@@ -11,17 +11,19 @@
   },
   "children": [
     {
-      "id": 7,
+      "id": 8,
       "bounds": {
         "left": 0.0,
         "top": 0.0,
         "right": 1024.0,
         "bottom": 768.0
       },
-      "properties": {},
+      "properties": {
+        "AccessibilityKey: Shape": "RectangleShape"
+      },
       "children": [
         {
-          "id": 8,
+          "id": 9,
           "bounds": {
             "left": 456.0,
             "top": 4.0,
@@ -29,50 +31,69 @@
             "bottom": 44.0
           },
           "properties": {
-            "AccessibilityKey: RequestFocus": "AccessibilityAction(label=null, action=function requestFocus (Kotlin reflection is not available))",
-            "AccessibilityKey: Role": "Button",
-            "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
             "AccessibilityKey: SetTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
-            "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
             "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: RequestFocus": "AccessibilityAction(label=null, action=function requestFocus (Kotlin reflection is not available))",
+            "AccessibilityKey: Shape": "RoundedCornerShape(topStart = CornerSize(size = 50.0%), topEnd = CornerSize(size = 50.0%), bottomEnd = CornerSize(size = 50.0%), bottomStart = CornerSize(size = 50.0%))",
             "AccessibilityKey: Focused": "true",
             "AccessibilityKey: Text": "[Click me!]",
-            "AccessibilityKey: OnClick": "AccessibilityAction(label=null, action=androidx.compose.foundation.AbstractClickableNode"
+            "AccessibilityKey: OnClick": "AccessibilityAction(label=null, action=androidx.compose.foundation.AbstractClickableNode",
+            "AccessibilityKey: Role": "Button"
           }
         },
         {
-          "id": 11,
+          "id": 12,
+          "bounds": {
+            "left": 494.0,
+            "top": 48.0,
+            "right": 530.0,
+            "bottom": 72.0
+          },
+          "properties": {
+            "AccessibilityKey: SetTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: Text": "[bug!]",
+            "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+            "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode"
+          }
+        },
+        {
+          "id": 13,
           "bounds": {
             "left": 0.0,
-            "top": 48.0,
+            "top": 72.0,
             "right": 1024.0,
-            "bottom": 522.0
+            "bottom": 546.0
           },
           "properties": {},
           "children": [
             {
-              "id": 13,
+              "id": 15,
               "bounds": {
                 "left": 287.0,
-                "top": 48.0,
+                "top": 72.0,
                 "right": 737.0,
-                "bottom": 498.0
-              },
-              "properties": {}
-            },
-            {
-              "id": 14,
-              "bounds": {
-                "left": 423.0,
-                "top": 498.0,
-                "right": 602.0,
                 "bottom": 522.0
               },
               "properties": {
-                "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
-                "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
-                "AccessibilityKey: Text": "[Compose: Hello, Java!]",
+                "AccessibilityKey: Shape": "RectangleShape"
+              }
+            },
+            {
+              "id": 16,
+              "bounds": {
+                "left": 423.0,
+                "top": 522.0,
+                "right": 602.0,
+                "bottom": 546.0
+              },
+              "properties": {
                 "AccessibilityKey: SetTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+                "AccessibilityKey: Text": "[Compose: Hello, Java!]",
+                "AccessibilityKey: ClearTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
+                "AccessibilityKey: ShowTextSubstitution": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode",
                 "AccessibilityKey: GetTextLayoutResult": "AccessibilityAction(label=null, action=androidx.compose.foundation.text.modifiers.TextStringSimpleNode"
               }
             }

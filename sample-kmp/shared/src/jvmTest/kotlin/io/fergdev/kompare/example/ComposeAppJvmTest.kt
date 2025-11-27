@@ -6,6 +6,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import io.fergdev.kompare.KReader
 import io.fergdev.kompare.TestNameResolver
+import io.fergdev.kompare.kompareImage
 import io.fergdev.kompare.kompare
 import io.fergdev.kompare.runKompareUiTest
 import kompareproj.sample_kmp.shared.generated.resources.Res
@@ -49,7 +50,7 @@ class ComposeAppJvmTest {
         runKompareUiTest {
             setContent { App() }
             onNodeWithText("Click me!").performClick()
-            doKompare(
+            kompareImage(
                 testNameResolver = object : TestNameResolver {
                     override fun getFullTestName(): String = "example3"
                 },
