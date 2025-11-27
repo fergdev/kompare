@@ -1,12 +1,7 @@
 plugins {
-//    alias(libs.plugins.androidApplication)
     id(libs.plugins.androidApplication.get().pluginId)
-//    id(libs.plugins.kotlin.android.get().pluginId)
     id(libs.plugins.composeCompiler.get().pluginId)
 }
-// kotlin {
-//    jvmToolchain(Config.javaMajorVersion)
-// }
 
 android {
     namespace = "com.fergdev.kompareandroid"
@@ -49,12 +44,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.material3)
 
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
@@ -64,14 +57,12 @@ dependencies {
     testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.androidx.compose.ui.test.junit4)
 
-    debugImplementation("androidx.fragment:fragment-testing:1.2.5")
     androidTestImplementation(libs.androidx.testExt.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(project(":kompare"))
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    testImplementation(kotlin("test"))
+//    testImplementation(kotlin("test"))
 }

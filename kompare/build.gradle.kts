@@ -6,8 +6,6 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     id(libs.plugins.kotlinMultiplatform.get().pluginId)
     id(libs.plugins.androidKotlinMultiplatformLibrary.get().pluginId)
-//    alias(libs.plugins.androidKotlinMultiplatformLibrary)
-//    alias(libs.plugins.androidLint)
     id(libs.plugins.androidLint.get().pluginId)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
@@ -76,7 +74,7 @@ kotlin {
             implementation(compose.uiTest)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.dropbox.differ)
+//            implementation(libs.dropbox.differ)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)

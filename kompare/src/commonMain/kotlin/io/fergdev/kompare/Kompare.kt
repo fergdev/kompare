@@ -23,9 +23,6 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.toSize
-import com.dropbox.differ.Color
-import com.dropbox.differ.Image
-import com.dropbox.differ.SimpleImageComparator
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlin.coroutines.CoroutineContext
@@ -219,7 +216,7 @@ public class KompareScope(
         val path = "files/kompare/" + testNameResolver.getFullTestName() + ".png"
         val expected = reader.readBytes(path).decodeToImageBitmap()
 //        assertTrue(compareImageBitmaps(expected, actual))
-        val isEqual = compare(expected, actual)
+        val isEqual = compareImageBitmaps(expected, actual)
         if (!isEqual) {
             val diff = generateImageDiff(expected, actual)
             saveFile(diff, testNameResolver.getFullTestName() + "_diff.png")
@@ -286,30 +283,30 @@ private fun generateImageDiff(golden: ImageBitmap, new: ImageBitmap): ImageBitma
 
 internal expect fun ImageBitmap.readPixelsByteArray(): ByteArray?
 
-internal fun compare(
-    bitmap1: ImageBitmap?, bitmap2: ImageBitmap?
-): Boolean {
-    if (bitmap1 == null && bitmap2 == null) return true // Both null, considered equal
-    if (bitmap1 == null || bitmap2 == null) return false // One is null, other isn't
-    val differ = SimpleImageComparator()
-    val result = differ.compare(DifferImage(bitmap1), DifferImage(bitmap2))
-    return result.pixelDifferences == 0
-}
-
-private class DifferImage(
-    val ib: ImageBitmap
-) : Image {
-    private val pixelMap = ib.toPixelMap()
-    override val height: Int
-        get() = ib.height
-    override val width: Int
-        get() = ib.width
-
-    override fun getPixel(x: Int, y: Int): Color {
-        val at = pixelMap[x, y]
-        return Color(at.red, at.green, at.blue, at.alpha)
-    }
-}
+//internal fun compare(
+//    bitmap1: ImageBitmap?, bitmap2: ImageBitmap?
+//): Boolean {
+//    if (bitmap1 == null && bitmap2 == null) return true // Both null, considered equal
+//    if (bitmap1 == null || bitmap2 == null) return false // One is null, other isn't
+//    val differ = SimpleImageComparator()
+//    val result = differ.compare(DifferImage(bitmap1), DifferImage(bitmap2))
+//    return result.pixelDifferences == 0
+//}
+//
+//private class DifferImage(
+//    val ib: ImageBitmap
+//) : Image {
+//    private val pixelMap = ib.toPixelMap()
+//    override val height: Int
+//        get() = ib.height
+//    override val width: Int
+//        get() = ib.width
+//
+//    override fun getPixel(x: Int, y: Int): Color {
+//        val at = pixelMap[x, y]
+//        return Color(at.red, at.green, at.blue, at.alpha)
+//    }
+//}
 
 internal fun compareImageBitmaps(bitmap1: ImageBitmap?, bitmap2: ImageBitmap?): Boolean {
     println("compareImageBitmaps")
