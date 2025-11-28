@@ -5,6 +5,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import io.fergdev.kompare.KReader
+import io.fergdev.kompare.KompareTest
 import io.fergdev.kompare.TestNameResolver
 import io.fergdev.kompare.kompareImage
 import io.fergdev.kompare.kompare
@@ -14,6 +15,13 @@ import kotlin.test.Test
 
 class ComposeAppJvmTest {
 
+
+    @KompareTest
+    fun wow() {
+
+    }
+
+    @KompareTest
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun example() {

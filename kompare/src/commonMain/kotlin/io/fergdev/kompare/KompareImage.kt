@@ -91,31 +91,6 @@ internal expect fun createDiffImage(
 
 internal expect fun ImageBitmap.readPixelsByteArray(): ByteArray?
 
-//internal fun compare(
-//    bitmap1: ImageBitmap?, bitmap2: ImageBitmap?
-//): Boolean {
-//    if (bitmap1 == null && bitmap2 == null) return true // Both null, considered equal
-//    if (bitmap1 == null || bitmap2 == null) return false // One is null, other isn't
-//    val differ = SimpleImageComparator()
-//    val result = differ.compare(DifferImage(bitmap1), DifferImage(bitmap2))
-//    return result.pixelDifferences == 0
-//}
-//
-//private class DifferImage(
-//    val ib: ImageBitmap
-//) : Image {
-//    private val pixelMap = ib.toPixelMap()
-//    override val height: Int
-//        get() = ib.height
-//    override val width: Int
-//        get() = ib.width
-//
-//    override fun getPixel(x: Int, y: Int): Color {
-//        val at = pixelMap[x, y]
-//        return Color(at.red, at.green, at.blue, at.alpha)
-//    }
-//}
-
 internal fun compareImageBitmaps(bitmap1: ImageBitmap?, bitmap2: ImageBitmap?): Boolean {
     println("compareImageBitmaps")
     if (bitmap1 == null && bitmap2 == null) return true // Both null, considered equal

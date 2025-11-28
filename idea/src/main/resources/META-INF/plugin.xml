@@ -1,0 +1,40 @@
+<idea-plugin>
+    <id>io.fergdev.kompare.idea</id>
+    <name>Kompare</name>
+    <vendor email="ferdev@outlook.com" url="https://fergdev.io">Fergdev</vendor>
+
+    <description>Kompare snapshot testing library for compose multiplatform apps.</description>
+
+
+    <dependencies>
+        <module name="intellij.platform.compose" />
+        <plugin id="org.jetbrains.kotlin" />
+    </dependencies>
+    <resource-bundle>messages.KompareBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="org.jetbrains.kotlin">
+        <supportsKotlinPluginMode supportsK2="true" />
+    </extensions>
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow anchor="right"
+            factoryClass="io.fergdev.kompare.idea.toolwindow.KompareToolWindowFactory"
+            id="KompareToolWindow" />
+        <postStartupActivity
+            implementation="io.fergdev.kompare.idea.startup.KompareProjectActivity" />
+
+        <runLineMarkerContributor
+            implementationClass="io.fergdev.kompare.idea.run.KompareRunLineMarkerContributor"
+            language="kotlin" />
+
+    </extensions>
+
+    <actions>
+        <action class="io.fergdev.kompare.idea.action.CompareImageAction"
+            description="Compare this image against a golden using Kompare"
+            id="io.fergdev.kompare.idea.CompareImageAction" text="Compare with Golden...">
+            <add-to-group anchor="last" group-id="CodeMenu" />
+        </action>
+    </actions>
+</idea-plugin>

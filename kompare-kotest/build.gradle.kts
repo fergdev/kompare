@@ -112,6 +112,6 @@ signing {
     sign(publishing.publications)
 }
 
-tasks.withType<Sign>().configureEach {
-    onlyIf { !project.version.toString().endsWith("SNAPSHOT") }
-}
+//tasks.withType<Sign>().configureEach {
+//    onlyIf { !project.version.toString().endsWith("SNAPSHOT") }
+//}

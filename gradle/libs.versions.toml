@@ -29,11 +29,19 @@ runner = "1.7.0"
 uiTest = "1.10.0-rc01"
 uiTestJunit4Android = "1.10.0-rc01"
 version-catalog-update = "1.0.1"
+intellij = "2.10.5"
 
 [libraries]
 composeRuntime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 composeFoundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
 composeUi = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
+material3Desktop = { module = "org.jetbrains.compose.material3:material3-desktop", version.ref = "material3" }
+
+
+composeRuntimeDesktop = { module = "org.jetbrains.compose.runtime:runtime-desktop", version.ref = "composeMultiplatform" }
+composeFoundationDesktop = { module = "org.jetbrains.compose.foundation:foundation-desktop", version.ref = "composeMultiplatform" }
+composeUiDesktop = { module = "org.jetbrains.compose.ui:ui-desktop", version.ref = "composeMultiplatform" }
+
 composeResources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 composePreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
 composeUiTest = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "composeMultiplatform" }
@@ -93,3 +101,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish-plugin" }
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+#jetbrains-intellij-platform = { id = "org.jetbrains.intellij.platform", version.ref = "intellij" }

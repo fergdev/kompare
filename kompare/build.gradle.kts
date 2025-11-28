@@ -69,12 +69,12 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlinx.serialization.json)
-            implementation(compose.foundation)
-            implementation(compose.ui)
-            implementation(compose.uiTest)
+            implementation(libs.composeFoundation)
+            implementation(libs.composeUi)
+            implementation(libs.composeUiTest)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.test)
-//            implementation(libs.dropbox.differ)
+            implementation(project(":kompare-image"))
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
@@ -128,6 +128,3 @@ signing {
     sign(publishing.publications)
 }
 
-tasks.withType<Sign>().configureEach {
-    onlyIf { !project.version.toString().endsWith("SNAPSHOT") }
-}

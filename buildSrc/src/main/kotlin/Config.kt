@@ -37,8 +37,8 @@ public object Config {
     const val licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0.txt"
     const val licenseDistribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
 
-    val jvmTarget = JvmTarget.JVM_17
-    val javaVersion = JavaVersion.VERSION_17
+    val jvmTarget = JvmTarget.JVM_11
+    val javaVersion = JavaVersion.VERSION_11
     val javaMajorVersion = javaVersion.ordinal + 1
 
     object Android {
