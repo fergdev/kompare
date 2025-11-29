@@ -23,7 +23,7 @@ jobs:
       - name: set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 24
           check-latest: true
           distribution: zulu
           cache: gradle
@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v5.0.0
         with:
           name: Sample kmp tests
-          path: sample-kmp/build/reports/tests/allTests
+          path: sample-kmp/shared/build/reports/tests/allTests
           if-no-files-found: error
           compression-level: 0
           overwrite: false
@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v5.0.0
         with:
           name: Sample kmp lint results
-          path: sample-kmp/build/reports/lint-results-debug.html
+          path: sample-kmp/shared/build/reports/lint-results-debug.html
           if-no-files-found: error
           compression-level: 0
           overwrite: false

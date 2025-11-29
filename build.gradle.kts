@@ -1,16 +1,18 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import nl.littlerobots.vcu.plugin.versionSelector
+
 plugins {
-//    id(libs.plugins.androidApplication.get().pluginId) apply false
-//    alias(libs.plugins.androidLibrary) apply false
-//    alias(libs.plugins.androidLint) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.composeHotReload) apply false
     alias(libs.plugins.composeMultiplatform) apply false
-//    alias(libs.plugins.androidKotlinMultiplatformLibrary) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.maven.publish) apply false
-    // in buildSrc
-//    alias(libs.plugins.kotlin.android) apply false
-//    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.versionCatalogUpdate)
+    id(libs.plugins.androidApplication.get().pluginId) apply false
+    id(libs.plugins.jetbrains.kotlin.jvm.get().pluginId) apply false
+    id(libs.plugins.kotlinMultiplatform.get().pluginId) apply false
+    id(libs.plugins.androidKotlinMultiplatformLibrary.get().pluginId) apply false
+    id(libs.plugins.androidLint.get().pluginId) apply false
 }
 
 dependencies {
@@ -20,7 +22,7 @@ dependencies {
 }
 
 tasks {
-    withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    withType<Detekt>().configureEach {
         buildUponDefaultConfig = true
         parallel = true
         setSource(projectDir)
@@ -37,13 +39,25 @@ tasks {
         }
     }
 
-    register<io.gitlab.arturbosch.detekt.Detekt>("detektFormat") {
+    register<Detekt>("detektFormat") {
         description = "Formats whole project."
         autoCorrect = true
     }
 
-    register<io.gitlab.arturbosch.detekt.Detekt>("detektAll") {
+    register<Detekt>("detektAll") {
         description = "Run detekt on whole project"
         autoCorrect = false
     }
+}
+
+versionCatalogUpdate {
+    versionSelector {
+        !(it.candidate.version.contains("SNAPSHOT", true) ||
+                it.candidate.version.contains("ALPHA", true) ||
+                it.candidate.version.contains("dev", true))
+    }
+}
+tasks.withType<Sign>().configureEach {
+    onlyIf { false }
+//    onlyIf { !project.version.toString().endsWith("SNAPSHOT") }
 }

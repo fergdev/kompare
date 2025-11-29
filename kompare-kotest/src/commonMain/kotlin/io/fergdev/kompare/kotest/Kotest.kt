@@ -8,7 +8,7 @@ public fun TestScope.getFullTestName(): String {
     val list = mutableListOf<String>()
     var testCase: TestCase? = this.testCase
     while (testCase != null) {
-        list.add(testCase.name.originalName)
+        list.add(testCase.name.name)
         testCase = testCase.parent
     }
     list.add(specName)
